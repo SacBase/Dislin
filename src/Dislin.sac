@@ -2,7 +2,8 @@ class Dislin;
 
 classtype int;
 
-provide all except { printSurfaceInternal} ;
+provide { createDisplay, createAxes3D, printSurface, destroyAxes3D,
+          clearDisplay, destroyDisplay };
 
 use Structures: all except {color};
 

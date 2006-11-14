@@ -1,32 +1,43 @@
-module SimpleDislin;
+class Dislin;
+
+classtype int;
 
 provide all except { printSurfaceInternal} ;
 
-use String: {string};
-use Structures: all except {string};
-
+use Structures: all except {color};
 
 external void disini();
-#pragma linkwith "dislnc"
-#pragma linkwith "m"
-#pragma linkwith "X11"
-#pragma linkwith "Xt"
-#pragma linkwith "Xm"
+  #pragma linkwith "dislnc"
+  #pragma linkwith "m"
+  #pragma linkwith "X11"
+  #pragma linkwith "Xt"
+  #pragma linkwith "Xm"
+  #pragma effect World::TheWorld
 
 external void setpag( string paper);
+  #pragma effect World::TheWorld
 external void metafl( string paper);
+  #pragma effect World::TheWorld
 external void disfin();
+  #pragma effect World::TheWorld
 external void erase();
+  #pragma effect World::TheWorld
 external void endgrf();
+  #pragma effect World::TheWorld
 external void box3d();
+  #pragma effect World::TheWorld
 
 external void messag( string cstr, int nx, int ny);
+  #pragma effect World::TheWorld
 
 external void symfil( string cdev, string cstat);
+  #pragma effect World::TheWorld
 
 external void pagera();
+  #pragma effect World::TheWorld
 
 external void complx();
+  #pragma effect World::TheWorld
 
 /***
  **
@@ -34,11 +45,13 @@ external void complx();
  **/
 
 external void axspos( int nxa, int nya);
+  #pragma effect World::TheWorld
 /**
  * nxa, nya - defining the lower left corner of the axis system
  */
 
 external void axslen( int nxl, int nyl);
+  #pragma effect World::TheWorld
 /**
  * nxl, nyl - length and height in plot coordinates
  */
@@ -54,6 +67,7 @@ external void axslen( int nxl, int nyl);
  **/
 
 external void view3d( float xvu, float yvu, float zvu, string cvu);
+  #pragma effect World::TheWorld
 /**
  * xvu, yvu, zvu position of the view point
  * cvu = "ABS" | "USER" | "ANGLE"
@@ -73,6 +87,7 @@ external void view3d( float xvu, float yvu, float zvu, string cvu);
 external void graf3d( float xa, float xe, float xor, float xstep,
                       float ya, float ye, float yor, float ystep,
                       float za, float ze, float zor, float zstep );
+  #pragma effect World::TheWorld
 /**
  * a - lower limit
  * e - upper limit
@@ -81,10 +96,13 @@ external void graf3d( float xa, float xe, float xor, float xstep,
  */
 
 external void height( int val);
+  #pragma effect World::TheWorld
 
 external void color( string col);
+  #pragma effect World::TheWorld
 
 external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
+  #pragma effect World::TheWorld
 
 
 
@@ -94,7 +112,7 @@ external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
 /******************************************************************************/
 
 
-int createDisplay( string title)
+Dislin createDisplay( string title)
 {
   metafl( "xwin");
   setpag( "da4p");
@@ -103,10 +121,10 @@ int createDisplay( string title)
   complx();
   height( 50);
 
-  return(0+0);
+  return( to_Dislin( 0));
 }
 
-int createAxes3D( int dis, float[3] mins, float[3]maxs, float[3]steps )
+void createAxes3D( Dislin &dis, float[3] mins, float[3]maxs, float[3]steps )
 {
   axspos( 200,2600);
   axslen( 1800,1800);
@@ -116,21 +134,22 @@ int createAxes3D( int dis, float[3] mins, float[3]maxs, float[3]steps )
   graf3d( mins[[0]], maxs[[0]], mins[[0]], steps[[0]], 
           mins[[1]], maxs[[1]], mins[[1]], steps[[1]],
           mins[[2]], maxs[[2]], mins[[2]], steps[[2]]);
-
-  return( 0+0);
 }
 
 
   
 
-int printSurface( int as, string col, float[.,.] mat)
+void printSurface( Dislin &dis, string col, float[.,.] mat)
 {
+  as = from_Dislin( dis);
+
   if( as != 0) {
     mat = mat ++ mat;
   }
     
   as = printSurfaceInternal( as, col, mat);
-  return( as);
+
+  dis = to_Dislin( as);
 }
 
 int printSurfaceInternal( int as, string col, float[.,.] mat)
@@ -140,21 +159,18 @@ int printSurfaceInternal( int as, string col, float[.,.] mat)
   return( as);
 }
 
-int destroyAxes3D( int as)
+void destroyAxes3D( Dislin &dis)
 {
   endgrf();
-  return( 0+0);
 }
 
-int clearDisplay( int disp)
+void clearDisplay( Dislin &disp)
 {
   erase();
-  return( disp);
 }
 
-int destroyDisplay( int dis)
+void destroyDisplay( Dislin dis)
 {
   disfin();
-  return( 0+0);
 }
 

@@ -4,3 +4,4 @@ export all;
 
 import DislinDisplay: all;
 import DislinPlot3d: all;
+import DislinBars: all;

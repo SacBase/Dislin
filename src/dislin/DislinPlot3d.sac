@@ -3,10 +3,10 @@ module DislinPlot3d;
 
 export { createAxes3D, printSurface, destroyAxes3D};
 
-use DislinRaw: all;
+use DislinSystem: all;
 use DislinDisplay: all;
 
-use Structures: all except {color};
+use Structures: {string,sel,shape,-};
 
 /******************************************************************************/
 
@@ -32,12 +32,6 @@ void printSurface( DislinDisplay &dis, string col, float[.,.] mat)
   surmat( mat, shape( mat)[0], shape( mat)[1], 1, 1);
 }
 
-int printSurfaceInternal( int as, string col, float[.,.] mat)
-{
-  color( col);
-  surmat( mat, shape( mat)[0], shape( mat)[1], 1, 1);
-  return( as);
-}
 
 void destroyAxes3D( DislinDisplay &dis)
 {

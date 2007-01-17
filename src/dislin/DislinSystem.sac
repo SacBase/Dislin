@@ -2,18 +2,32 @@ class DislinSystem;
 
 classtype int;
 
-provide: all;
+provide all except { getLevel, setLevel};
+
+use String: {string};
 
 objdef DislinSystem TheDislinSystem = to_DislinSystem( 0);
 
-int getLevel()
+int getGlobalLevel()
 {
-  return( from_DislinSystem( TheDislinSystem));
+  return( getLevel( TheDislinSystem));
 }
 
-void setLevel( int level)
+int getLevel( DislinSystem & system)
 {
-  TheDislinSystem = to_DislinSystem( level);
+  level = from_DislinSystem( system);
+  system = to_DislinSystem( level);
+  return( level);
+}
+
+void setLevel( DislinSystem & system, int level)
+{
+  system = to_DislinSystem( level);
+}
+
+void setGlobalLevel( int level)
+{
+  setLevel( TheDislinSystem, level);
 }
 
 external void disini();
@@ -22,32 +36,32 @@ external void disini();
   #pragma linkwith "X11"
   #pragma linkwith "Xt"
   #pragma linkwith "Xm"
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void setpag( string paper);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 external void metafl( string paper);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 external void disfin();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 external void erase();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 external void endgrf();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 external void box3d();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void messag( string cstr, int nx, int ny);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void symfil( string cdev, string cstat);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void pagera();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void complx();
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 /***
  **
@@ -55,13 +69,13 @@ external void complx();
  **/
 
 external void axspos( int nxa, int nya);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 /**
  * nxa, nya - defining the lower left corner of the axis system
  */
 
 external void axslen( int nxl, int nyl);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 /**
  * nxl, nyl - length and height in plot coordinates
  */
@@ -77,7 +91,7 @@ external void axslen( int nxl, int nyl);
  **/
 
 external void view3d( float xvu, float yvu, float zvu, string cvu);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 /**
  * xvu, yvu, zvu position of the view point
  * cvu = "ABS" | "USER" | "ANGLE"
@@ -97,7 +111,7 @@ external void view3d( float xvu, float yvu, float zvu, string cvu);
 external void graf3d( float xa, float xe, float xor, float xstep,
                       float ya, float ye, float yor, float ystep,
                       float za, float ze, float zor, float zstep );
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 /**
  * a - lower limit
  * e - upper limit
@@ -106,13 +120,13 @@ external void graf3d( float xa, float xe, float xor, float xstep,
  */
 
 external void height( int val);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void color( string col);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
-  #pragma effect World::TheWorld
+  #pragma effect DislinSystem::TheDislinSystem
 
 
 

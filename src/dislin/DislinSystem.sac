@@ -130,6 +130,13 @@ external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
 
 
 
+/***
+ **
+ ** Quick-Plots:
+ **/
 
+
+external void qplbar( float[.] xvect, int n);
+  #pragma effect DislinSystem::TheDislinSystem
 
 

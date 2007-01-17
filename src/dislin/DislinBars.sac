@@ -1,0 +1,19 @@
+module DislinBars;
+
+
+export { printBars };
+
+use DislinSystem: all;
+use DislinDisplay: all;
+
+use Structures: {string, shape, sel};
+
+/******************************************************************************/
+
+
+void printBars( DislinDisplay &dis, string col, float[.] vect)
+{
+/*  color( col); */
+  qplbar( vect, shape( vect)[0]);
+}
+

@@ -1,131 +1,17 @@
-class Dislin;
+module DislinPlot3d;
 
-classtype int;
 
-provide { createDisplay, createAxes3D, printSurface, destroyAxes3D,
-          clearDisplay, destroyDisplay };
+export { createAxes3D, printSurface, destroyAxes3D};
+
+use DislinRaw: all;
+use DislinDisplay: all;
 
 use Structures: all except {color};
-
-external void disini();
-  #pragma linkwith "dislnc"
-  #pragma linkwith "m"
-  #pragma linkwith "X11"
-  #pragma linkwith "Xt"
-  #pragma linkwith "Xm"
-  #pragma effect World::TheWorld
-
-external void setpag( string paper);
-  #pragma effect World::TheWorld
-external void metafl( string paper);
-  #pragma effect World::TheWorld
-external void disfin();
-  #pragma effect World::TheWorld
-external void erase();
-  #pragma effect World::TheWorld
-external void endgrf();
-  #pragma effect World::TheWorld
-external void box3d();
-  #pragma effect World::TheWorld
-
-external void messag( string cstr, int nx, int ny);
-  #pragma effect World::TheWorld
-
-external void symfil( string cdev, string cstat);
-  #pragma effect World::TheWorld
-
-external void pagera();
-  #pragma effect World::TheWorld
-
-external void complx();
-  #pragma effect World::TheWorld
-
-/***
- **
- ** Parameter Settings - Axis systems
- **/
-
-external void axspos( int nxa, int nya);
-  #pragma effect World::TheWorld
-/**
- * nxa, nya - defining the lower left corner of the axis system
- */
-
-external void axslen( int nxl, int nyl);
-  #pragma effect World::TheWorld
-/**
- * nxl, nyl - length and height in plot coordinates
- */
-
-
-
-
-
-
-/***
- **
- ** Defining view properties:
- **/
-
-external void view3d( float xvu, float yvu, float zvu, string cvu);
-  #pragma effect World::TheWorld
-/**
- * xvu, yvu, zvu position of the view point
- * cvu = "ABS" | "USER" | "ANGLE"
- */
-
-
-
-
-
-
-
-/***
- **
- ** Plotting axis systems:
- **/
-
-external void graf3d( float xa, float xe, float xor, float xstep,
-                      float ya, float ye, float yor, float ystep,
-                      float za, float ze, float zor, float zstep );
-  #pragma effect World::TheWorld
-/**
- * a - lower limit
- * e - upper limit
- * or - first label
- * step - label separation
- */
-
-external void height( int val);
-  #pragma effect World::TheWorld
-
-external void color( string col);
-  #pragma effect World::TheWorld
-
-external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
-  #pragma effect World::TheWorld
-
-
-
-
-
 
 /******************************************************************************/
 
 
-Dislin createDisplay( string title)
-{
-  metafl( "xwin");
-  setpag( "da4p");
-  disini();
-  pagera();
-  complx();
-  height( 50);
-
-  return( to_Dislin( 0));
-}
-
-void createAxes3D( Dislin &dis, float[3] mins, float[3]maxs, float[3]steps )
+void createAxes3D( DislinDisplay &dis, float[3] mins, float[3]maxs, float[3]steps )
 {
   axspos( 200,2600);
   axslen( 1800,1800);
@@ -140,17 +26,10 @@ void createAxes3D( Dislin &dis, float[3] mins, float[3]maxs, float[3]steps )
 
   
 
-void printSurface( Dislin &dis, string col, float[.,.] mat)
+void printSurface( DislinDisplay &dis, string col, float[.,.] mat)
 {
-  as = from_Dislin( dis);
-
-  if( as != 0) {
-    mat = mat ++ mat;
-  }
-    
-  as = printSurfaceInternal( as, col, mat);
-
-  dis = to_Dislin( as);
+  color( col);
+  surmat( mat, shape( mat)[0], shape( mat)[1], 1, 1);
 }
 
 int printSurfaceInternal( int as, string col, float[.,.] mat)
@@ -160,19 +39,8 @@ int printSurfaceInternal( int as, string col, float[.,.] mat)
   return( as);
 }
 
-void destroyAxes3D( Dislin &dis)
+void destroyAxes3D( DislinDisplay &dis)
 {
   endgrf();
-}
-
-void clearDisplay( Dislin &disp)
-{
-  erase();
-  color( "white");
-}
-
-void destroyDisplay( Dislin dis)
-{
-  disfin();
 }
 

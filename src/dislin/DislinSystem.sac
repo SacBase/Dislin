@@ -1,0 +1,121 @@
+class DislinSystem;
+
+classtype int;
+
+provide: all;
+
+objdef DislinSystem TheDislinSystem = to_DislinSystem( 0);
+
+int getLevel()
+{
+  return( from_DislinSystem( TheDislinSystem));
+}
+
+void setLevel( int level)
+{
+  TheDislinSystem = to_DislinSystem( level);
+}
+
+external void disini();
+  #pragma linkwith "dislnc"
+  #pragma linkwith "m"
+  #pragma linkwith "X11"
+  #pragma linkwith "Xt"
+  #pragma linkwith "Xm"
+  #pragma effect World::TheWorld
+
+external void setpag( string paper);
+  #pragma effect World::TheWorld
+external void metafl( string paper);
+  #pragma effect World::TheWorld
+external void disfin();
+  #pragma effect World::TheWorld
+external void erase();
+  #pragma effect World::TheWorld
+external void endgrf();
+  #pragma effect World::TheWorld
+external void box3d();
+  #pragma effect World::TheWorld
+
+external void messag( string cstr, int nx, int ny);
+  #pragma effect World::TheWorld
+
+external void symfil( string cdev, string cstat);
+  #pragma effect World::TheWorld
+
+external void pagera();
+  #pragma effect World::TheWorld
+
+external void complx();
+  #pragma effect World::TheWorld
+
+/***
+ **
+ ** Parameter Settings - Axis systems
+ **/
+
+external void axspos( int nxa, int nya);
+  #pragma effect World::TheWorld
+/**
+ * nxa, nya - defining the lower left corner of the axis system
+ */
+
+external void axslen( int nxl, int nyl);
+  #pragma effect World::TheWorld
+/**
+ * nxl, nyl - length and height in plot coordinates
+ */
+
+
+
+
+
+
+/***
+ **
+ ** Defining view properties:
+ **/
+
+external void view3d( float xvu, float yvu, float zvu, string cvu);
+  #pragma effect World::TheWorld
+/**
+ * xvu, yvu, zvu position of the view point
+ * cvu = "ABS" | "USER" | "ANGLE"
+ */
+
+
+
+
+
+
+
+/***
+ **
+ ** Plotting axis systems:
+ **/
+
+external void graf3d( float xa, float xe, float xor, float xstep,
+                      float ya, float ye, float yor, float ystep,
+                      float za, float ze, float zor, float zstep );
+  #pragma effect World::TheWorld
+/**
+ * a - lower limit
+ * e - upper limit
+ * or - first label
+ * step - label separation
+ */
+
+external void height( int val);
+  #pragma effect World::TheWorld
+
+external void color( string col);
+  #pragma effect World::TheWorld
+
+external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
+  #pragma effect World::TheWorld
+
+
+
+
+
+

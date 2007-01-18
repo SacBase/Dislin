@@ -11,7 +11,7 @@ use Structures: {string, shape, sel};
 /******************************************************************************/
 
 
-void printBars( DislinDisplay &dis, string col, float[.] vect)
+void printBars( DislinDisplay &dis, float[.] vect)
 {
 /*  color( col); */
   qplbar( vect, shape( vect)[0]);

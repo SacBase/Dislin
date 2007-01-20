@@ -1,0 +1,59 @@
+class DislinDisplay;
+
+classtype int;
+
+use DislinSystem: all;
+use DislinPage: all;
+use String: {string};
+use Array: all;
+
+export { DislinDisplay, createDisplay, clearDisplay, destroyDisplay };
+
+/******************************************************************************/
+
+DislinDisplay createDisplay()
+{
+  return( createDisplay( createPage()));
+}
+
+DislinDisplay createDisplay( DislinPage page)
+{
+  status = getGlobalStatus();
+  if( !any(status) ) {
+    metafl( "xwin");
+    if( hasNorm( page)) {
+      setpag( getNorm( page));
+    } else {
+      page( getWidth( page), getHeight( page));
+    }
+    disini();
+    status[1] = true;
+    winid = 1;
+  } else {
+    opnwin( 2);
+    winid = 2;
+  }
+  setGlobalStatus( status );
+
+  return( to_DislinDisplay( winid));
+}
+
+void clearDisplay( DislinDisplay &disp)
+{
+  winid = from_DislinDisplay( disp);
+  selwin( winid);
+  erase();
+  disp = to_DislinDisplay( winid);
+}
+
+void destroyDisplay( DislinDisplay disp)
+{
+  winid = from_DislinDisplay( disp);
+  clswin( winid);
+  status = getGlobalStatus();
+  status[winid] = false;
+  if( !any(status) ) {
+    disfin();
+  } 
+}
+

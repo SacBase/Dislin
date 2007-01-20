@@ -6,14 +6,20 @@ export { printBars };
 use DislinSystem: all;
 use DislinDisplay: all;
 
-use Structures: {string, shape, sel};
+use String: {string };
+use Array: {shape, sel};
 
 /******************************************************************************/
 
-
-void printBars( DislinDisplay &dis, float[.] vect)
+void printBars( float[.] vect)
 {
-/*  color( col); */
+  dis = createDisplay();
+  printBars( dis, vect);
+  destroyDisplay( dis);
+}
+
+void printBars( DislinDisplay & dis, float[.] vect)
+{
   qplbar( vect, shape( vect)[0]);
 }
 

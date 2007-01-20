@@ -1,33 +1,34 @@
 class DislinSystem;
 
-classtype int;
+classtype bool[9];
 
-provide all except { getLevel, setLevel};
+provide all except { getStatus, setStatus};
 
 use String: {string};
+use Array: {genarray};
 
-objdef DislinSystem TheDislinSystem = to_DislinSystem( 0);
+objdef DislinSystem TheDislinSystem = to_DislinSystem( genarray([9], false));
 
-int getGlobalLevel()
+bool[9] getGlobalStatus()
 {
-  return( getLevel( TheDislinSystem));
+  return( getStatus( TheDislinSystem));
 }
 
-int getLevel( DislinSystem & system)
+bool[9] getStatus( DislinSystem & system)
 {
-  level = from_DislinSystem( system);
-  system = to_DislinSystem( level);
-  return( level);
+  status = from_DislinSystem( system);
+  system = to_DislinSystem( status);
+  return( status);
 }
 
-void setLevel( DislinSystem & system, int level)
+void setStatus( DislinSystem & system, bool[9] status)
 {
-  system = to_DislinSystem( level);
+  system = to_DislinSystem( status);
 }
 
-void setGlobalLevel( int level)
+void setGlobalStatus( bool[9] status)
 {
-  setLevel( TheDislinSystem, level);
+  setStatus( TheDislinSystem, status);
 }
 
 external void disini();
@@ -40,6 +41,8 @@ external void disini();
 
 external void setpag( string paper);
   #pragma effect DislinSystem::TheDislinSystem
+external void page( int wid, int height);
+  #pragma effect DislinSystem::TheDislinSystem
 external void metafl( string paper);
   #pragma effect DislinSystem::TheDislinSystem
 external void disfin();
@@ -49,6 +52,13 @@ external void erase();
 external void endgrf();
   #pragma effect DislinSystem::TheDislinSystem
 external void box3d();
+  #pragma effect DislinSystem::TheDislinSystem
+
+external void opnwin( int id);
+  #pragma effect DislinSystem::TheDislinSystem
+external void selwin( int id);
+  #pragma effect DislinSystem::TheDislinSystem
+external void clswin( int id);
   #pragma effect DislinSystem::TheDislinSystem
 
 external void messag( string cstr, int nx, int ny);

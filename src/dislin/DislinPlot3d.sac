@@ -6,7 +6,8 @@ export { createAxes3D, printSurface, destroyAxes3D};
 use DislinSystem: all;
 use DislinDisplay: all;
 
-use Structures: {string,sel,shape,-};
+use String: {string};
+use Array: {sel,shape,-};
 
 /******************************************************************************/
 

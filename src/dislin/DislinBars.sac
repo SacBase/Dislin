@@ -4,7 +4,7 @@ module DislinBars;
 export { printBars };
 
 use DislinSystem: all;
-use DislinDisplay: all;
+use DislinCanvas: all;
 
 use String: {string };
 use Array: {shape, sel};

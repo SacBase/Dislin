@@ -1,4 +1,4 @@
-class DislinDisplay;
+class DislinCanvas;
 
 classtype int;
 
@@ -7,16 +7,46 @@ use DislinPage: all;
 use String: {string};
 use Array: all;
 
-export { DislinDisplay, createDisplay, clearDisplay, destroyDisplay };
+export { DislinCanvas, createDisplay, clearDisplay, destroyDisplay };
 
 /******************************************************************************/
 
-DislinDisplay createDisplay()
+DislinCanvas createPdfFile()
+{
+  return( createFile( "pdf"));
+}
+
+DislinCanvas createFile( string format)
+{
+  return( createFile( createPage(), format));
+}
+
+DislinCanvas createDisplay()
 {
   return( createDisplay( createPage()));
 }
 
-DislinDisplay createDisplay( DislinPage page)
+DislinCanvas createFile( DislinPage page, string format)
+{
+  status = getGlobalStatus();
+  if( !any(status) ) {
+    metafl( format);
+    if( hasNorm( page)) {
+      setpag( getNorm( page));
+    } else {
+      page( getWidth( page), getHeight( page));
+    }
+    disini();
+    status[0] = true;
+  } else {
+    /* error : only one canvas at a time! */
+  }
+  setGlobalStatus( status );
+
+  return( to_DislinCanvas( 0));
+}
+
+DislinCanvas createDisplay( DislinPage page)
 {
   status = getGlobalStatus();
   if( !any(status) ) {
@@ -35,20 +65,20 @@ DislinDisplay createDisplay( DislinPage page)
   }
   setGlobalStatus( status );
 
-  return( to_DislinDisplay( winid));
+  return( to_DislinCanvas( winid));
 }
 
-void clearDisplay( DislinDisplay &disp)
+void clearDisplay( DislinCanvas &disp)
 {
-  winid = from_DislinDisplay( disp);
+  winid = from_DislinCanvas( disp);
   selwin( winid);
   erase();
-  disp = to_DislinDisplay( winid);
+  disp = to_DislinCanvas( winid);
 }
 
-void destroyDisplay( DislinDisplay disp)
+void destroyDisplay( DislinCanvas disp)
 {
-  winid = from_DislinDisplay( disp);
+  winid = from_DislinCanvas( disp);
   clswin( winid);
   status = getGlobalStatus();
   status[winid] = false;

@@ -18,7 +18,7 @@ void printBars( float[.] vect)
   destroyDisplay( dis);
 }
 
-void printBars( DislinDisplay & dis, float[.] vect)
+void printBars( DislinCanvas & dis, float[.] vect)
 {
   qplbar( vect, shape( vect)[0]);
 }

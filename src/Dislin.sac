@@ -5,4 +5,4 @@ export all;
 import DislinPage: all;
 import DislinCanvas: all;
 import DislinPlot3d: all;
-import DislinBars: all;
+import DislinQuick: all;

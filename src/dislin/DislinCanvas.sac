@@ -7,7 +7,7 @@ use DislinPage: all;
 use String: {string};
 use Array: all;
 
-export { DislinCanvas, createDisplay, clearDisplay, destroyDisplay };
+export all;
 
 /******************************************************************************/
 
@@ -26,15 +26,31 @@ DislinCanvas createDisplay()
   return( createDisplay( createPage()));
 }
 
+void registerDisplay( int winid)
+{
+  status = getGlobalStatus();
+  status[ winid] = true;
+  setGlobalStatus( status );
+}
+
+void unregisterDisplay( DislinCanvas disp)
+{
+  winid = from_DislinCanvas( disp);
+  status = getGlobalStatus();
+  status[ winid] = false;
+  setGlobalStatus( status );
+}
+
 DislinCanvas createFile( DislinPage page, string format)
 {
   status = getGlobalStatus();
   if( !any(status) ) {
     metafl( format);
-    if( hasNorm( page)) {
+    if( sizeNormed( page)) {
       setpag( getNorm( page));
     } else {
-      page( getWidth( page), getHeight( page));
+      w,h = getSize( page);
+      page( w, h);
     }
     disini();
     status[0] = true;
@@ -51,16 +67,21 @@ DislinCanvas createDisplay( DislinPage page)
   status = getGlobalStatus();
   if( !any(status) ) {
     metafl( "xwin");
-    if( hasNorm( page)) {
+    if( sizeNormed( page)) {
       setpag( getNorm( page));
     } else {
-      page( getWidth( page), getHeight( page));
+      w,h = getSize( page);
+      page( w, h);
     }
     disini();
+    if( hasBorder( page)) {
+      pagera();
+    }
     status[1] = true;
     winid = 1;
   } else {
     opnwin( 2);
+    status[2] = true;
     winid = 2;
   }
   setGlobalStatus( status );
@@ -68,12 +89,17 @@ DislinCanvas createDisplay( DislinPage page)
   return( to_DislinCanvas( winid));
 }
 
-void clearDisplay( DislinCanvas &disp)
+void activateDisplay( DislinCanvas & disp)
 {
   winid = from_DislinCanvas( disp);
   selwin( winid);
-  erase();
   disp = to_DislinCanvas( winid);
+}
+
+void clearDisplay( DislinCanvas &disp)
+{
+  activateDisplay( disp);
+  erase();
 }
 
 void destroyDisplay( DislinCanvas disp)

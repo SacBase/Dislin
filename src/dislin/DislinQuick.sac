@@ -1,0 +1,49 @@
+module DislinQuick;
+
+export all;
+
+use DislinSystem: all;
+use DislinCanvas: all;
+
+use Array: {shape, sel};
+
+/******************************************************************************/
+
+void printBars( float[.] vect)
+{
+  dis = createDisplay();
+  qplbar( vect, shape( vect)[0]);
+  unregisterDisplay( dis);
+}
+
+void printPie( float[.] vect)
+{
+  dis = createDisplay();
+  qplpie( vect, shape( vect)[0]);
+  unregisterDisplay( dis);
+}
+
+/******************************************************************************/
+
+void print3dColor( float[.,.] mat)
+{
+  dis = createDisplay();
+  qplclr( mat, shape( mat)[0], shape( mat)[1]);
+  unregisterDisplay( dis);
+}
+
+void printSurface( float[.,.] mat)
+{
+  dis = createDisplay();
+  qplsur( mat, shape( mat)[0], shape( mat)[1]);
+  unregisterDisplay( dis);
+}
+
+void printContour( float[.,.] mat, int num_levels)
+{
+  dis = createDisplay();
+  qplcon( mat, shape( mat)[0], shape( mat)[1], num_levels);
+  unregisterDisplay( dis);
+}
+
+

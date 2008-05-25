@@ -14,12 +14,7 @@ use Array: {shape, sel};
 void printBars( float[.] vect)
 {
   dis = createDisplay();
-  printBars( dis, vect);
-  destroyDisplay( dis);
-}
-
-void printBars( DislinCanvas & dis, float[.] vect)
-{
   qplbar( vect, shape( vect)[0]);
+  unregisterDisplay( dis);
 }
 

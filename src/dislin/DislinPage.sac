@@ -2,7 +2,7 @@ module DislinPage;
 
 use String: {string};
 
-export all;
+export all except {allocPage};
 
 /**
  *
@@ -19,21 +19,27 @@ export all;
  */
 
 external typedef DislinPage;
+  #pragma linkobj "src/page.o"
+  #pragma copyfun "copyPage"
+  #pragma freefun "freePage"
+
 external typedef DislinHeader;
+  #pragma linkobj "src/header.o"
+  #pragma copyfun "copyHeader"
+  #pragma freefun "freeHeader"
+
  
-external DislinPage createPage();
+external DislinPage allocPage();
   #pragma linkobj "src/page.o"
   #pragma linksign[0]
 
-external bool hasNorm( DislinPage page);
+external bool sizeNormed( DislinPage page);
   #pragma linksign[0,1]
 external string getNorm( DislinPage page);
   #pragma linksign[0,1]
-external int getWidth( DislinPage page);
-  #pragma linksign[0,1]
-external int getHeight( DislinPage page);
-  #pragma linksign[0,1]
-external bool getHasBorder( DislinPage page);
+external int, int getSize( DislinPage page);
+  #pragma linksign[0,1,2]
+external bool hasBorder( DislinPage page);
   #pragma linksign[0,1]
 external bool hasHeader( DislinPage page);
   #pragma linksign[0,1]
@@ -42,10 +48,40 @@ external DislinHeader getHeader( DislinPage page);
 
 external DislinPage setNorm( DislinPage page, string norm);
   #pragma linksign[1,1,2]
-external DislinPage setWidthHeight( DislinPage page, int w, int h);
+external DislinPage setSize( DislinPage page, int w, int h);
   #pragma linksign[1,1,2,3]
-external DislinPage setHasBorder( DislinPage page, bool b);
-  #pragma linksign[1,1,2]
+external DislinPage unsetBorder( DislinPage page);
+  #pragma linksign[1,1]
+
+
+
+/*******************************************************************************
+ *
+ * functions for general use:
+ */
+
+DislinPage createPage()
+{
+  return( createPage( "da4l"));
+}
+
+DislinPage createPage( string norm)
+{
+  page = allocPage();
+  page = setNorm( page, norm);
+  return( page);
+}
+
+DislinPage createPage( int wid, int height)
+{
+  page = allocPage();
+  page = setSize( page, wid, height);
+  return( page);
+}
+
+external DislinPage setBorder( DislinPage page);
+  #pragma linksign[1,1]
+
 external DislinPage setHeader( DislinPage page, DislinHeader h);
   #pragma linksign[1,1,2]
 
@@ -53,16 +89,3 @@ external DislinHeader createHeader( string pre, string post, int pos, int dir);
   #pragma linkobj "src/header.o"
   #pragma linksign[0,1,2,3,4]
 
-DislinPage createNormPage( string norm)
-{
-  page = createPage();
-  page = setNorm( page, norm);
-  return( page);
-}
-
-DislinPage createPage( int wid, int height)
-{
-  page = createPage();
-  page = setWidthHeight( page, wid, height);
-  return( page);
-}

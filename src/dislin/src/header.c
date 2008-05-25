@@ -22,3 +22,13 @@ DislinHeader *createHeader( char *pre, char *post, int pos, int dir)
   return( ptr);
 }
 
+DislinHeader *copyHeader( DislinHeader *ptr)
+{
+  return( createHeader( ptr->pre, ptr->post, ptr->pos, ptr->dir));
+}
+
+void freeHeader( DislinHeader *ptr)
+{
+  free( ptr);
+}
+

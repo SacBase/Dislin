@@ -14,8 +14,8 @@ use Array: {sel,shape,-};
 
 void createAxes3D( DislinCanvas &dis, float[3] mins, float[3]maxs, float[3]steps )
 {
-  axspos( 200,2600);
-  axslen( 1800,1800);
+  axspos( 200,2000);
+  axslen( 2000,2000);
 
   view3d( -5f, -5f, 4f, "abs");
   

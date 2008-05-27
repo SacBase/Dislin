@@ -2,10 +2,9 @@ class DislinCanvas;
 
 classtype int;
 
-use DislinSystem: all;
+use DislinSystem: all except{color};
 use DislinPage: all;
-use String: {string};
-use Array: all;
+use Structures: all;
 
 export all;
 
@@ -18,7 +17,7 @@ DislinCanvas createPdfFile()
 
 DislinCanvas createFile( string format)
 {
-  return( createFile( createPage(), format));
+  return( createCanvas( createPage(), format));
 }
 
 DislinCanvas createDisplay()
@@ -41,32 +40,11 @@ void unregisterDisplay( DislinCanvas disp)
   setGlobalStatus( status );
 }
 
-DislinCanvas createFile( DislinPage page, string format)
+DislinCanvas createCanvas( DislinPage page, string format)
 {
   status = getGlobalStatus();
   if( !any(status) ) {
     metafl( format);
-    if( sizeNormed( page)) {
-      setpag( getNorm( page));
-    } else {
-      w,h = getSize( page);
-      page( w, h);
-    }
-    disini();
-    status[0] = true;
-  } else {
-    /* error : only one canvas at a time! */
-  }
-  setGlobalStatus( status );
-
-  return( to_DislinCanvas( 0));
-}
-
-DislinCanvas createDisplay( DislinPage page)
-{
-  status = getGlobalStatus();
-  if( !any(status) ) {
-    metafl( "xwin");
     if( sizeNormed( page)) {
       setpag( getNorm( page));
     } else {
@@ -80,13 +58,31 @@ DislinCanvas createDisplay( DislinPage page)
     status[1] = true;
     winid = 1;
   } else {
-    opnwin( 2);
-    status[2] = true;
-    winid = 2;
+    if( format == "xwin") {
+      winid = 1;
+      while( status[winid] && (winid < 9)) {
+        winid++;
+      }
+      if( winid < 9) {
+        opnwin( winid);
+        status[winid] = true;
+      } else {
+        /* cannot open more than 8 windows at a time! */
+        winid = 0;
+      }
+    } else {
+      /* only one non-X11 canvas at a time! */
+      winid = 0;
+    }
   }
   setGlobalStatus( status );
 
   return( to_DislinCanvas( winid));
+}
+
+DislinCanvas createDisplay( DislinPage page)
+{
+  return( createCanvas( page, "xwin"));
 }
 
 void activateDisplay( DislinCanvas & disp)
@@ -105,7 +101,9 @@ void clearDisplay( DislinCanvas &disp)
 void destroyDisplay( DislinCanvas disp)
 {
   winid = from_DislinCanvas( disp);
-  clswin( winid);
+  if( winid > 1) {
+    clswin( winid);
+  }
   status = getGlobalStatus();
   status[winid] = false;
   if( !any(status) ) {

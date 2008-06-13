@@ -1,15 +1,25 @@
 module DislinPlot3d;
 
 
-export { createAxes3D, printSurface, destroyAxes3D};
+export {createAxes2D, destroyAxes2D, createAxes3D, printSurface, printContour, destroyAxes3D};
 
 use DislinSystem: all;
 use DislinCanvas: all;
 
 use String: {string};
-use Array: {sel,shape,-};
+use Array: all;
 
 /******************************************************************************/
+
+void createAxes2D( DislinCanvas &dis, float[2] mins, float[2]maxs, float[2]steps )
+{
+  axspos( 200,2000);
+  axslen( 2000,2000);
+
+  graf( mins[[0]], maxs[[0]], mins[[0]], steps[[0]],
+        mins[[1]], maxs[[1]], mins[[1]], steps[[1]]);
+}
+
 
 
 void createAxes3D( DislinCanvas &dis, float[3] mins, float[3]maxs, float[3]steps )
@@ -33,6 +43,23 @@ void printSurface( DislinCanvas &dis, string col, float[.,.] mat)
   surmat( mat, shape( mat)[0], shape( mat)[1], 1, 1);
 }
 
+void printContour( DislinCanvas &dis, string col, float[.,.] mat, int num_lines)
+{
+  low = minval( mat);
+  high = maxval( mat);
+
+  color( col);
+  for( i = 0; i<num_lines; i++) {
+    conmat( mat, shape( mat)[0], shape( mat)[1], low + tof(i) * (high-low)
+                                                 / tof(num_lines));
+  }
+}
+
+
+void destroyAxes2D( DislinCanvas &dis)
+{
+  endgrf();
+}
 
 void destroyAxes3D( DislinCanvas &dis)
 {

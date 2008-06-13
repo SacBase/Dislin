@@ -118,6 +118,10 @@ external void view3d( float xvu, float yvu, float zvu, string cvu);
  ** Plotting axis systems:
  **/
 
+external void graf( float xa, float xe, float xor, float xstp,
+                    float ya, float ye, float yor, float ystp);
+  #pragma effect DislinSystem::TheDislinSystem
+
 external void graf3d( float xa, float xe, float xor, float xstep,
                       float ya, float ye, float yor, float ystep,
                       float za, float ze, float zor, float zstep );
@@ -136,6 +140,9 @@ external void color( string col);
   #pragma effect DislinSystem::TheDislinSystem
 
 external void surmat( float[.,.] zmat, int ixdim, int iydim, int ixp, int iyp);
+  #pragma effect DislinSystem::TheDislinSystem
+
+external void conmat( float[.,.] zmat, int ixdim, int iydim, float zlev);
   #pragma effect DislinSystem::TheDislinSystem
 
 

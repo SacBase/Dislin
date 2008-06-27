@@ -13,8 +13,21 @@ use Array: all;
 
 void createAxes2D( DislinCanvas &dis, float[2] mins, float[2]maxs, float[2]steps )
 {
-  axspos( 200,2000);
-  axslen( 2000,2000);
+  size = getSize( dis);
+  maxsize = (getSize( dis) * 3) / 4 ;
+  minoffset = [size[0] / 8, (size[1] * 7) / 8];
+
+  delta = maxs - mins;
+
+  if( (tof( maxsize[0]) / tof( maxsize[1]))
+      > (delta[0] / delta[1])) {
+    maxsize[0] = toi( tof( maxsize[1]) * (delta[0] / delta[1]));
+  } else {
+    maxsize[1] = toi( tof( maxsize[0]) / (delta[0] / delta[1]));
+  }
+
+  axspos( minoffset[0],minoffset[1]);
+  axslen( maxsize[0],maxsize[1]);
 
   graf( mins[[0]], maxs[[0]], mins[[0]], steps[[0]],
         mins[[1]], maxs[[1]], mins[[1]], steps[[1]]);

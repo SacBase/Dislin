@@ -54,6 +54,8 @@ external void endgrf();
 external void box3d();
   #pragma effect DislinSystem::TheDislinSystem
 
+external void winsiz( int nw, int nh);
+  #pragma effect DislinSystem::TheDislinSystem
 external void opnwin( int id);
   #pragma effect DislinSystem::TheDislinSystem
 external void selwin( int id);

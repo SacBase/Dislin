@@ -1,14 +1,28 @@
 class DislinCanvas;
 
-classtype int;
+classtype int[3];
 
 use DislinSystem: all except{color};
-use DislinPage: all;
+use DislinPage: all except {getSize};
 use Structures: all;
 
 export all;
 
 /******************************************************************************/
+
+int getWinId( DislinCanvas & disp)
+{
+  tmp = from_DislinCanvas( disp);
+  disp = to_DislinCanvas( tmp);
+  return(tmp[[0]]);
+}
+
+int[2] getSize( DislinCanvas & disp)
+{
+  tmp = from_DislinCanvas( disp);
+  disp = to_DislinCanvas( tmp);
+  return(drop( [1], tmp));
+}
 
 DislinCanvas createPdfFile()
 {
@@ -17,12 +31,27 @@ DislinCanvas createPdfFile()
 
 DislinCanvas createFile( string format)
 {
-  return( createCanvas( createPage(), format));
+  return( createCanvas( createPage(), format, [853,603]));
 }
 
 DislinCanvas createDisplay()
 {
-  return( createDisplay( createPage()));
+  return( createCanvas( createPage(), "xwin", [853,603]));
+}
+
+DislinCanvas createDisplay( DislinPage page)
+{
+  return( createCanvas( page, "xwin", [800,600]));
+}
+
+DislinCanvas createDisplay( int[2] size)
+{
+  return( createCanvas( createPage(), "xwin", size));
+}
+
+DislinCanvas createDisplay( DislinPage page, int[2] size)
+{
+  return( createCanvas( page, "xwin", size));
 }
 
 void registerDisplay( int winid)
@@ -34,13 +63,13 @@ void registerDisplay( int winid)
 
 void unregisterDisplay( DislinCanvas disp)
 {
-  winid = from_DislinCanvas( disp);
+  winid = getWinId( disp);
   status = getGlobalStatus();
   status[ winid] = false;
   setGlobalStatus( status );
 }
 
-DislinCanvas createCanvas( DislinPage page, string format)
+DislinCanvas createCanvas( DislinPage page, string format, int[2] size)
 {
   status = getGlobalStatus();
   if( !any(status) ) {
@@ -48,9 +77,10 @@ DislinCanvas createCanvas( DislinPage page, string format)
     if( sizeNormed( page)) {
       setpag( getNorm( page));
     } else {
-      w,h = getSize( page);
+      w,h = DislinPage::getSize( page);
       page( w, h);
     }
+    winsiz( size[[0]], size[[1]]);
     disini();
     if( hasBorder( page)) {
       pagera();
@@ -65,6 +95,7 @@ DislinCanvas createCanvas( DislinPage page, string format)
       }
       if( winid < 9) {
         opnwin( winid);
+        winsiz( size[[0]], size[[1]]);
         status[winid] = true;
       } else {
         /* cannot open more than 8 windows at a time! */
@@ -77,19 +108,14 @@ DislinCanvas createCanvas( DislinPage page, string format)
   }
   setGlobalStatus( status );
 
-  return( to_DislinCanvas( winid));
+  return( to_DislinCanvas( [winid, size[[0]], size[[1]]]));
 }
 
-DislinCanvas createDisplay( DislinPage page)
-{
-  return( createCanvas( page, "xwin"));
-}
 
 void activateDisplay( DislinCanvas & disp)
 {
-  winid = from_DislinCanvas( disp);
+  winid = getWinId( disp);
   selwin( winid);
-  disp = to_DislinCanvas( winid);
 }
 
 void clearDisplay( DislinCanvas &disp)
@@ -100,7 +126,7 @@ void clearDisplay( DislinCanvas &disp)
 
 void destroyDisplay( DislinCanvas disp)
 {
-  winid = from_DislinCanvas( disp);
+  winid = getWinId( disp);
   if( winid > 1) {
     clswin( winid);
   }

@@ -41,6 +41,8 @@ external void disini();
 
 external void setpag( string paper);
   #pragma effect DislinSystem::TheDislinSystem
+external int, int getpag( );
+  #pragma effect DislinSystem::TheDislinSystem
 external void page( int wid, int height);
   #pragma effect DislinSystem::TheDislinSystem
 external void metafl( string paper);

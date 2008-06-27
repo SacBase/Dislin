@@ -80,7 +80,6 @@ DislinCanvas createCanvas( DislinPage page, string format, int[2] size)
       w,h = DislinPage::getSize( page);
       page( w, h);
     }
-    winsiz( size[[0]], size[[1]]);
     disini();
     if( hasBorder( page)) {
       pagera();

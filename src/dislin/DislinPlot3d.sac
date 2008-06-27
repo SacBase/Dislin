@@ -13,9 +13,9 @@ use Array: all;
 
 void createAxes2D( DislinCanvas &dis, float[2] mins, float[2]maxs, float[2]steps )
 {
-  size = getSize( dis);
-  maxsize = (getSize( dis) * 3) / 4 ;
-  minoffset = [size[0] / 8, (size[1] * 7) / 8];
+  nx,ny = getpag( );
+  maxsize = ([nx,ny] * 3) / 4 ;
+  minoffset = [nx / 8, (ny * 7) / 8];
 
   delta = maxs - mins;
 

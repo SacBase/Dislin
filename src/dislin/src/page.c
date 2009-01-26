@@ -1,4 +1,4 @@
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include "page.h"
 
@@ -57,6 +57,8 @@ DislinPage *copyPage( DislinPage *ptr)
   } else {
     res->header = NULL;
   }
+
+  return res;
 }
 
 void freePage( DislinPage *ptr)

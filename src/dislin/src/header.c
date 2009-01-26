@@ -1,4 +1,4 @@
-#include <malloc.h>
+#include <stdlib.h>
 #include "header.h"
 
 struct DISLIN_HEADER {

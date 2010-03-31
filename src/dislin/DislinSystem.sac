@@ -36,7 +36,6 @@ external void disini();
   #pragma linkwith "m"
   #pragma linkwith "X11"
   #pragma linkwith "Xt"
-  #pragma linkwith "Xm"
   #pragma effect DislinSystem::TheDislinSystem
 
 external void setpag( string paper);

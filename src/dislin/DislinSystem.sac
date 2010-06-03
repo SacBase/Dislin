@@ -30,7 +30,7 @@ void setGlobalStatus( bool[9] status)
 {
   setStatus( TheDislinSystem, status);
 }
-
+/* #pragma linkwith "Xm"*/
 external void disini();
   #pragma linkwith "dislin"
   #pragma linkwith "m"

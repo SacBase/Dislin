@@ -46,14 +46,13 @@ void createAxes3D( DislinCanvas &dis, float[3] mins, float[3]maxs, float[3]steps
           mins[[1]], maxs[[1]], mins[[1]], steps[[1]],
           mins[[2]], maxs[[2]], mins[[2]], steps[[2]]);
 }
+
+
   
 
 void printSurface( DislinCanvas &dis, string col, float[.,.] mat)
 {
   color( col);
-  StdIO::printf( "%d, %d, min %d, max %d\n", 
-                 shape(mat)[0], shape(mat)[1], 
-                 minval( mat), maxval( mat));
   surmat( mat, shape( mat)[0], shape( mat)[1], 1, 1);
 }
 

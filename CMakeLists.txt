@@ -16,8 +16,8 @@ SET (SAC2C_EXTRA_INC    ""          CACHE STRING "Extra include files that shoul
 # Check whether sac2c is operational
 INCLUDE ("cmake-common/check-sac2c.cmake")
 
-# TODO Check whether reqruired library is present on the system
-#INCLUDE ("cmake/check-dislin.cmake")
+# Check whether dislin libraries are present on the system
+INCLUDE ("cmake/check-dislin.cmake")
 
 # For every target run CMakeLists.txt in src
 FOREACH (TARGET IN ITEMS ${TARGETS})

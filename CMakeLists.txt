@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.3)
 
-PROJECT (stdlib-jpeg)
+PROJECT (sac-dislin)
 #FIXME(artem) we can create a definitoin for language "SAC" which will
 #             automatically pull sac2c compiler.
 

@@ -6,7 +6,7 @@
 typedef struct DISLIN_PAGE DislinPage;
 
 
-extern DislinPage *allocPage( );
+extern DislinPage *allocPage( void );
 extern DislinPage *copyPage( DislinPage *ptr);
 extern void freePage( DislinPage *ptr);
 

@@ -28,7 +28,7 @@ char * copyStr( char * str)
   return( res);
 }
 
-DislinPage *allocPage( )
+DislinPage *allocPage( void)
 {
   DislinPage *ptr;
 

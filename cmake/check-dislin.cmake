@@ -1,7 +1,7 @@
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckLibraryExists)
 
-FIND_LIBRARY (DISLIN_LIB      "dislin")
+FIND_LIBRARY (DISLIN_LIB  "dislin" HINTS "/usr/local/dislin/" )
 IF (DISLIN_LIB)
     GET_FILENAME_COMPONENT (DISLIN_PATH  ${DISLIN_LIB} PATH)
     CHECK_LIBRARY_EXISTS (${DISLIN_LIB} "disini" ${DISLIN_PATH} DISLIN_FOUND)
@@ -10,6 +10,6 @@ ENDIF ()
 
 IF (NOT DISLIN_LIB OR NOT DISLIN_FOUND OR NOT HAVE_DISLIN_H)
     MESSAGE (FATAL_ERROR
-             "The dislin library is either not found or is not operational"
+             "The dislin library is either not found or is not operational "
              "on the given system")
 ENDIF ()

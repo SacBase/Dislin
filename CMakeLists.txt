@@ -7,6 +7,9 @@ PROJECT (sac-dislin)
 # Where the compiled sac modules result
 SET (DLL_BUILD_DIR  "${PROJECT_BINARY_DIR}/lib")
 
+# dislin (from dislin.org) does not put dislin.h in an INCLUDE folder
+SET (CMAKE_REQUIRED_INCLUDES "/usr/local/dislin")
+
 # For what targets we build modules
 SET (TARGETS            seq mt_pth  CACHE STRING "Build stdlib-jpeg for these targets")
 SET (SAC2C_EXEC                     CACHE STRING "A path to sac2c compiler")
